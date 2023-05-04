@@ -1,17 +1,7 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Fri Dec 10 18:33:00 2021
-
-@author: Ziyang_Wang
-"""
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton
+from PyQt5.Qt import QPixmap, QPoint, Qt, QPainter
 import sys
-from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QFileDialog
-from PyQt5.Qt import QPixmap, QPoint, Qt, QPainter, QIcon
-from PyQt5.QtCore import QSize
-from PyQt5 import QtGui
-import sys
-import qtawesome
-
 from PyQt5.QtGui import *
 
 
