@@ -10,40 +10,31 @@ from PyQt5.QtCore import QCoreApplication, Qt
 from PyQt5.QtMultimedia import *
 from io import StringIO
 
-import Maskshow
+import DefaultResult
 import JenMain2
 
-
-
-##Part one
-#The pages window of the GUI
-
-# The home page window when you start the program
-class right_widget(QtWidgets.QMainWindow):
+#----------------code for ui-------------------------------
+# The home page
+class HomePageWidget(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.init_ui()
 
     def init_ui(self):
-        self.right_widget = QtWidgets.QWidget()  # create the window
-        self.right_widget.setObjectName('right_widget')
-        self.right_layout = QtWidgets.QGridLayout()
-        self.right_widget.setLayout(self.right_layout)  # set the layout form
+        self.home_widget = QtWidgets.QWidget()
+        self.home_widget.setObjectName('home_widget')
+        self.home_layout = QtWidgets.QGridLayout()
+        self.home_widget.setLayout(self.home_layout)
 
-        self.right_recommend_label = QtWidgets.QLabel("")
-        self.right_recommend_label.setObjectName('right_lable')
+        self.home_recommend_label = QtWidgets.QLabel("")
+        self.home_recommend_label.setObjectName('home_lable')
 
-        self.right_recommend_widget = QtWidgets.QWidget()  
-        self.right_recommend_layout = QtWidgets.QGridLayout()  # use gridlayout
-        self.right_recommend_widget.setLayout(self.right_recommend_layout)
+        self.home_recommend_widget = QtWidgets.QWidget()
+        self.home_recommend_layout = QtWidgets.QGridLayout()
+        self.home_recommend_widget.setLayout(self.home_recommend_layout)
 
-        #set the location of the label
-
-        self.right_layout.addWidget(self.right_recommend_label, 2, 0, 1, 8, Qt.AlignTop)
-        self.right_layout.addWidget(self.right_recommend_widget, 2, 0, 2, 9)
-
-        self.right_widget.setStyleSheet('''
-            QWidget#right_widget{
+        self.home_widget.setStyleSheet('''
+            QWidget#home_widget{
                 color:#232C51;
                 border-image:url(./images/bg9.png);
                 background:white;
@@ -53,7 +44,7 @@ class right_widget(QtWidgets.QMainWindow):
                 border-top-right-radius:20px;
                 border-bottom-right-radius:20px;
             }
-            QLabel#right_lable{
+            QLabel#home_lable{
                 border:none;
                 font-size:30px;
                 font-weight:700;
@@ -61,7 +52,7 @@ class right_widget(QtWidgets.QMainWindow):
             }
         ''')
 
-        self.right_recommend_widget.setStyleSheet(
+        self.home_recommend_widget.setStyleSheet(
             '''
             QToolButton{
                 border:none;
@@ -78,7 +69,6 @@ class right_widget(QtWidgets.QMainWindow):
             QToolButton:hover{border-bottom:2px solid #F76677;}
             ''')
 
-
 ##main window
 #Same layout as the home page window
 class MainWindow(QWidget):
@@ -89,26 +79,18 @@ class MainWindow(QWidget):
         self.init_ui()
 
     def init_ui(self):
-        self.right_widget = QtWidgets.QWidget()  
-        self.right_widget.setObjectName('right_widget')
-        self.right_layout = QtWidgets.QGridLayout()
-        self.right_widget.setLayout(self.right_layout)  
+        self.home_widget = QtWidgets.QWidget()  
+        self.home_widget.setObjectName('home_widget')
+        self.home_layout = QtWidgets.QGridLayout()
+        self.home_widget.setLayout(self.home_layout)  
+        self.Layout.addWidget(self.home_widget, 0, 2, 12, 10)  
+        self.home_recommend_label1 = QtWidgets.QLabel(" ")
+        self.home_recommend_widget = QtWidgets.QWidget()  
+        self.home_recommend_layout = QtWidgets.QGridLayout()  
+        self.home_recommend_widget.setLayout(self.home_recommend_layout)
 
-        self.Layout.addWidget(self.right_widget, 0, 2, 12, 10)  
-
-        self.right_recommend_label1 = QtWidgets.QLabel(" ")
-        #self.right_recommend_label1.setObjectName('right_lable')
-
-        self.right_recommend_widget = QtWidgets.QWidget()  
-        self.right_recommend_layout = QtWidgets.QGridLayout()  
-        self.right_recommend_widget.setLayout(self.right_recommend_layout)
-
-        self.right_layout.addWidget(self.right_recommend_label1, 2, 0, 1, 8, Qt.AlignTop)
-
-        self.right_layout.addWidget(self.right_recommend_widget, 7, 0, 2, 9, Qt.AlignTop)
-
-        self.right_widget.setStyleSheet('''
-            QWidget#right_widget{
+        self.home_widget.setStyleSheet('''
+            QWidget#home_widget{
                 color:#232C51;
                 border-image:url(./images/bg9.png);
                 background:white;
@@ -118,7 +100,7 @@ class MainWindow(QWidget):
                 border-top-right-radius:20px;
                 border-bottom-right-radius:20px;
             }
-            QLabel#right_lable{
+            QLabel#home_lable{
                 border:none;
                 font-size:40px;
                 font-weight:700;
@@ -126,7 +108,7 @@ class MainWindow(QWidget):
             }
         ''')
 
-        self.right_recommend_widget.setStyleSheet(
+        self.home_recommend_widget.setStyleSheet(
             '''
             QToolButton{
                 border:none;
@@ -146,34 +128,34 @@ class MainWindow(QWidget):
 
 #  readme window
 
-class HelpWindow(QWidget):
+class InstructionWindow(QWidget):
     def __init__(self, name, Layout):
         super().__init__()
         self.name = name
         self.Layout = Layout
         self.init_ui()
-#General design as home page
+
     def init_ui(self):
-        self.right_widget = QtWidgets.QWidget()  
-        self.right_widget.setObjectName('right_widget')
-        self.right_layout = QtWidgets.QGridLayout()
-        self.right_widget.setLayout(self.right_layout)  
+        self.home_widget = QtWidgets.QWidget()  
+        self.home_widget.setObjectName('home_widget')
+        self.home_layout = QtWidgets.QGridLayout()
+        self.home_widget.setLayout(self.home_layout)  
 
-        self.Layout.addWidget(self.right_widget, 0, 2, 12, 10)  # 右侧部件在第0行第3列，占8行9列
+        self.Layout.addWidget(self.home_widget, 0, 2, 12, 10)  
 
-        self.right_recommend_label1 = QtWidgets.QLabel("Here may help you understand our software")
-        self.right_recommend_label1.setObjectName('right_lable')
+        self.home_recommend_label1 = QtWidgets.QLabel("Here may help you understand our software")
+        self.home_recommend_label1.setObjectName('home_lable')
 
-        self.right_recommend_widget = QtWidgets.QWidget()  
-        self.right_recommend_layout = QtWidgets.QGridLayout()  
-        self.right_recommend_widget.setLayout(self.right_recommend_layout)
+        self.home_recommend_widget = QtWidgets.QWidget()  
+        self.home_recommend_layout = QtWidgets.QGridLayout()  
+        self.home_recommend_widget.setLayout(self.home_recommend_layout)
 
-        self.right_layout.addWidget(self.right_recommend_label1, 1, 0, 1, 9, Qt.AlignTop)
+        self.home_layout.addWidget(self.home_recommend_label1, 1, 0, 1, 9, Qt.AlignTop)
 
-        self.right_layout.addWidget(self.right_recommend_widget, 4, 0, 2, 9, Qt.AlignTop)
+        self.home_layout.addWidget(self.home_recommend_widget, 4, 0, 2, 9, Qt.AlignTop)
 
-        self.right_widget.setStyleSheet('''
-            QWidget#right_widget{
+        self.home_widget.setStyleSheet('''
+            QWidget#home_widget{
                 color:#232C51;
                 border-image:url(./images/readme.png);
                 background:white;
@@ -183,7 +165,7 @@ class HelpWindow(QWidget):
                 border-top-right-radius:20px;
                 border-bottom-right-radius:20px;
             }
-            QLabel#right_lable{
+            QLabel#home_lable{
                 border:none;
                 font-size:30px;
                 font-weight:700;
@@ -191,7 +173,7 @@ class HelpWindow(QWidget):
             }
         ''')
 
-        self.right_recommend_widget.setStyleSheet(
+        self.home_recommend_widget.setStyleSheet(
             '''
             QToolButton{
                 border:none;
@@ -211,7 +193,7 @@ class HelpWindow(QWidget):
 
 
 # SVM window
-class FilterWindow(QWidget):
+class SVMWindow(QWidget):
     def __init__(self, name, Layout):
         super().__init__()
         self.name = name
@@ -316,19 +298,19 @@ class FilterWindow(QWidget):
         root.mainloop() 
 
     def init_ui(self):
-        self.right_widget = QtWidgets.QWidget()  
-        self.right_widget.setObjectName('right_widget')
-        self.right_layout = QtWidgets.QGridLayout()
-        self.right_widget.setLayout(self.right_layout)  
+        self.home_widget = QtWidgets.QWidget()  
+        self.home_widget.setObjectName('home_widget')
+        self.home_layout = QtWidgets.QGridLayout()
+        self.home_widget.setLayout(self.home_layout)  
 
-        self.Layout.addWidget(self.right_widget, 0, 2, 12, 10)  
+        self.Layout.addWidget(self.home_widget, 0, 2, 12, 10)  
 
-        self.right_recommend_label1 = QtWidgets.QLabel("")
-        self.right_recommend_label1.setObjectName('right_lable')
+        self.home_recommend_label1 = QtWidgets.QLabel("")
+        self.home_recommend_label1.setObjectName('home_lable')
 
-        self.right_recommend_widget = QtWidgets.QWidget()  
-        self.right_recommend_layout = QtWidgets.QGridLayout()  
-        self.right_recommend_widget.setLayout(self.right_recommend_layout)
+        self.home_recommend_widget = QtWidgets.QWidget()  
+        self.home_recommend_layout = QtWidgets.QGridLayout()  
+        self.home_recommend_widget.setLayout(self.home_recommend_layout)
 
         self.recommend_button_32 = QtWidgets.QToolButton() 
         self.recommend_button_32.clicked.connect(self.do_btn32)
@@ -336,7 +318,7 @@ class FilterWindow(QWidget):
         self.recommend_button_32.setIconSize(QtCore.QSize(100, 80))  
         self.recommend_button_32.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)  
 
-        self.right_recommend_layout.addWidget(self.recommend_button_32, 0, 0)
+        self.home_recommend_layout.addWidget(self.recommend_button_32, 0, 0)
 
         self.recommend_button_33 = QtWidgets.QToolButton()
         self.recommend_button_33.setText("Process")  
@@ -345,14 +327,14 @@ class FilterWindow(QWidget):
         self.recommend_button_33.setIconSize(QtCore.QSize(100, 80))  
         self.recommend_button_33.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)  
 
-        self.right_recommend_layout.addWidget(self.recommend_button_33, 0, 1)
+        self.home_recommend_layout.addWidget(self.recommend_button_33, 0, 1)
 
-        self.right_layout.addWidget(self.right_recommend_label1, 2, 0, 1, 8, Qt.AlignTop)
+        self.home_layout.addWidget(self.home_recommend_label1, 2, 0, 1, 8, Qt.AlignTop)
 
-        self.right_layout.addWidget(self.right_recommend_widget, 7, 0, 2, 9, Qt.AlignTop)
+        self.home_layout.addWidget(self.home_recommend_widget, 7, 0, 2, 9, Qt.AlignTop)
 
-        self.right_widget.setStyleSheet('''
-            QWidget#right_widget{
+        self.home_widget.setStyleSheet('''
+            QWidget#home_widget{
                 color:#232C51;
                 border-image:url(./images/BGSVM.png);
                 background:white;
@@ -362,7 +344,7 @@ class FilterWindow(QWidget):
                 border-top-right-radius:20px;
                 border-bottom-right-radius:20px;
             }
-            QLabel#right_lable{
+            QLabel#home_lable{
                 border:none;
                 font-size:40px;
                 font-weight:700;
@@ -370,7 +352,7 @@ class FilterWindow(QWidget):
             }
         ''')
 
-        self.right_recommend_widget.setStyleSheet(
+        self.home_recommend_widget.setStyleSheet(
             '''
             QToolButton{
                 border:none;
@@ -495,19 +477,19 @@ class CNNWindow(QWidget):
 
 
     def init_ui(self):
-        self.right_widget = QtWidgets.QWidget()  
-        self.right_widget.setObjectName('right_widget')
-        self.right_layout = QtWidgets.QGridLayout()
-        self.right_widget.setLayout(self.right_layout)  
+        self.home_widget = QtWidgets.QWidget()  
+        self.home_widget.setObjectName('home_widget')
+        self.home_layout = QtWidgets.QGridLayout()
+        self.home_widget.setLayout(self.home_layout)  
 
-        self.Layout.addWidget(self.right_widget, 0, 2, 12, 10)  
+        self.Layout.addWidget(self.home_widget, 0, 2, 12, 10)  
 
-        self.right_recommend_label1 = QtWidgets.QLabel("")
-        self.right_recommend_label1.setObjectName('right_lable')
+        self.home_recommend_label1 = QtWidgets.QLabel("")
+        self.home_recommend_label1.setObjectName('home_lable')
 
-        self.right_recommend_widget = QtWidgets.QWidget()  
-        self.right_recommend_layout = QtWidgets.QGridLayout()  
-        self.right_recommend_widget.setLayout(self.right_recommend_layout)
+        self.home_recommend_widget = QtWidgets.QWidget()  
+        self.home_recommend_layout = QtWidgets.QGridLayout()  
+        self.home_recommend_widget.setLayout(self.home_recommend_layout)
 
         self.recommend_button_11 = QtWidgets.QToolButton()
         #self.recommend_button_11.setText("Process")  
@@ -516,7 +498,7 @@ class CNNWindow(QWidget):
         self.recommend_button_11.setIconSize(QtCore.QSize(100, 80))  
         self.recommend_button_11.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)  
 
-        self.right_recommend_layout.addWidget(self.recommend_button_11, 0, 0)
+        self.home_recommend_layout.addWidget(self.recommend_button_11, 0, 0)
 
         self.recommend_button_12 = QtWidgets.QToolButton()
         self.recommend_button_12.setText("Process")  
@@ -525,14 +507,14 @@ class CNNWindow(QWidget):
         self.recommend_button_12.setIconSize(QtCore.QSize(100, 80))  
         self.recommend_button_12.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)  
 
-        self.right_recommend_layout.addWidget(self.recommend_button_12, 0, 1)
+        self.home_recommend_layout.addWidget(self.recommend_button_12, 0, 1)
 
-        self.right_layout.addWidget(self.right_recommend_label1, 2, 0, 1, 8, Qt.AlignTop)
+        self.home_layout.addWidget(self.home_recommend_label1, 2, 0, 1, 8, Qt.AlignTop)
 
-        self.right_layout.addWidget(self.right_recommend_widget, 7, 0, 2, 9, Qt.AlignTop)
+        self.home_layout.addWidget(self.home_recommend_widget, 7, 0, 2, 9, Qt.AlignTop)
 
-        self.right_widget.setStyleSheet('''
-            QWidget#right_widget{
+        self.home_widget.setStyleSheet('''
+            QWidget#home_widget{
                 color:#232C51;
                 border-image:url(./images/BGCNN.png);
                 background:white;
@@ -542,7 +524,7 @@ class CNNWindow(QWidget):
                 border-top-right-radius:20px;
                 border-bottom-right-radius:20px;
             }
-            QLabel#right_lable{
+            QLabel#home_lable{
                 border:none;
                 font-size:40px;
                 font-weight:700;
@@ -550,7 +532,7 @@ class CNNWindow(QWidget):
             }
         ''')
 
-        self.right_recommend_widget.setStyleSheet(
+        self.home_recommend_widget.setStyleSheet(
             '''
             QToolButton{
                 border:none;
@@ -675,28 +657,27 @@ class RFWindow(QWidget):
         root.mainloop() 
 
     def init_ui(self):
-        self.right_widget = QtWidgets.QWidget()  
-        self.right_widget.setObjectName('right_widget')
-        self.right_layout = QtWidgets.QGridLayout()
-        self.right_widget.setLayout(self.right_layout)  
+        self.home_widget = QtWidgets.QWidget()  
+        self.home_widget.setObjectName('home_widget')
+        self.home_layout = QtWidgets.QGridLayout()
+        self.home_widget.setLayout(self.home_layout)  
 
-        self.Layout.addWidget(self.right_widget, 0, 2, 12, 10)  
+        self.Layout.addWidget(self.home_widget, 0, 2, 12, 10)  
 
-        self.right_recommend_label1 = QtWidgets.QLabel("")
-        self.right_recommend_label1.setObjectName('right_lable')
+        self.home_recommend_label1 = QtWidgets.QLabel("")
+        self.home_recommend_label1.setObjectName('home_lable')
 
-        self.right_recommend_widget = QtWidgets.QWidget()  
-        self.right_recommend_layout = QtWidgets.QGridLayout()  
-        self.right_recommend_widget.setLayout(self.right_recommend_layout)
+        self.home_recommend_widget = QtWidgets.QWidget()  
+        self.home_recommend_layout = QtWidgets.QGridLayout()  
+        self.home_recommend_widget.setLayout(self.home_recommend_layout)
 
         self.recommend_button_21 = QtWidgets.QToolButton()
-        #self.recommend_button_11.setText("Process")  
         self.recommend_button_21.clicked.connect(self.do_btn21)
         self.recommend_button_21.setIcon(QtGui.QIcon('./images/chrom.png'))  
         self.recommend_button_21.setIconSize(QtCore.QSize(100, 80))  
         self.recommend_button_21.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)  
 
-        self.right_recommend_layout.addWidget(self.recommend_button_21, 0, 0)
+        self.home_recommend_layout.addWidget(self.recommend_button_21, 0, 0)
 
         self.recommend_button_22 = QtWidgets.QToolButton()
         self.recommend_button_22.setText("Process")  
@@ -705,14 +686,14 @@ class RFWindow(QWidget):
         self.recommend_button_22.setIconSize(QtCore.QSize(100, 80))  
         self.recommend_button_22.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)  
 
-        self.right_recommend_layout.addWidget(self.recommend_button_22, 0, 1)
+        self.home_recommend_layout.addWidget(self.recommend_button_22, 0, 1)
 
-        self.right_layout.addWidget(self.right_recommend_label1, 2, 0, 1, 8, Qt.AlignTop)
+        self.home_layout.addWidget(self.home_recommend_label1, 2, 0, 1, 8, Qt.AlignTop)
 
-        self.right_layout.addWidget(self.right_recommend_widget, 7, 0, 2, 9, Qt.AlignTop)
+        self.home_layout.addWidget(self.home_recommend_widget, 7, 0, 2, 9, Qt.AlignTop)
 
-        self.right_widget.setStyleSheet('''
-            QWidget#right_widget{
+        self.home_widget.setStyleSheet('''
+            QWidget#home_widget{
                 color:#232C51;
                 border-image:url(./images/BGRF.png);
                 background:white;
@@ -722,7 +703,7 @@ class RFWindow(QWidget):
                 border-top-right-radius:20px;
                 border-bottom-right-radius:20px;
             }
-            QLabel#right_lable{
+            QLabel#home_lable{
                 border:none;
                 font-size:40px;
                 font-weight:700;
@@ -730,7 +711,7 @@ class RFWindow(QWidget):
             }
         ''')
 
-        self.right_recommend_widget.setStyleSheet(
+        self.home_recommend_widget.setStyleSheet(
             '''
             QToolButton{
                 border:none;
@@ -856,19 +837,19 @@ class SVMCNNWindow(QWidget):
 
 
     def init_ui(self):
-        self.right_widget = QtWidgets.QWidget()  
-        self.right_widget.setObjectName('right_widget')
-        self.right_layout = QtWidgets.QGridLayout()
-        self.right_widget.setLayout(self.right_layout)  
+        self.home_widget = QtWidgets.QWidget()  
+        self.home_widget.setObjectName('home_widget')
+        self.home_layout = QtWidgets.QGridLayout()
+        self.home_widget.setLayout(self.home_layout)  
 
-        self.Layout.addWidget(self.right_widget, 0, 2, 12, 10)  
+        self.Layout.addWidget(self.home_widget, 0, 2, 12, 10)  
 
-        self.right_recommend_label1 = QtWidgets.QLabel("")
-        self.right_recommend_label1.setObjectName('right_lable')
+        self.home_recommend_label1 = QtWidgets.QLabel("")
+        self.home_recommend_label1.setObjectName('home_lable')
 
-        self.right_recommend_widget = QtWidgets.QWidget()  
-        self.right_recommend_layout = QtWidgets.QGridLayout()  
-        self.right_recommend_widget.setLayout(self.right_recommend_layout)
+        self.home_recommend_widget = QtWidgets.QWidget()  
+        self.home_recommend_layout = QtWidgets.QGridLayout()  
+        self.home_recommend_widget.setLayout(self.home_recommend_layout)
 
         self.recommend_button_41 = QtWidgets.QToolButton()
         #self.recommend_button_11.setText("Process")  
@@ -877,7 +858,7 @@ class SVMCNNWindow(QWidget):
         self.recommend_button_41.setIconSize(QtCore.QSize(100, 80))  
         self.recommend_button_41.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)  
 
-        self.right_recommend_layout.addWidget(self.recommend_button_41, 0, 0)
+        self.home_recommend_layout.addWidget(self.recommend_button_41, 0, 0)
 
         self.recommend_button_42 = QtWidgets.QToolButton()
         self.recommend_button_42.setText("Process")  
@@ -886,14 +867,14 @@ class SVMCNNWindow(QWidget):
         self.recommend_button_42.setIconSize(QtCore.QSize(100, 80))  
         self.recommend_button_42.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)  
 
-        self.right_recommend_layout.addWidget(self.recommend_button_42, 0, 1)
+        self.home_recommend_layout.addWidget(self.recommend_button_42, 0, 1)
 
-        self.right_layout.addWidget(self.right_recommend_label1, 2, 0, 1, 8, Qt.AlignTop)
+        self.home_layout.addWidget(self.home_recommend_label1, 2, 0, 1, 8, Qt.AlignTop)
 
-        self.right_layout.addWidget(self.right_recommend_widget, 7, 0, 2, 9, Qt.AlignTop)
+        self.home_layout.addWidget(self.home_recommend_widget, 7, 0, 2, 9, Qt.AlignTop)
 
-        self.right_widget.setStyleSheet('''
-            QWidget#right_widget{
+        self.home_widget.setStyleSheet('''
+            QWidget#home_widget{
                 color:#232C51;
                 border-image:url(./images/BGCNNSVM.png);
                 background:white;
@@ -903,7 +884,7 @@ class SVMCNNWindow(QWidget):
                 border-top-right-radius:20px;
                 border-bottom-right-radius:20px;
             }
-            QLabel#right_lable{
+            QLabel#home_lable{
                 border:none;
                 font-size:40px;
                 font-weight:700;
@@ -911,7 +892,7 @@ class SVMCNNWindow(QWidget):
             }
         ''')
 
-        self.right_recommend_widget.setStyleSheet(
+        self.home_recommend_widget.setStyleSheet(
             '''
             QToolButton{
                 border:none;
@@ -1036,19 +1017,19 @@ class CNNRFWindow(QWidget):
 
 
     def init_ui(self):
-        self.right_widget = QtWidgets.QWidget()  
-        self.right_widget.setObjectName('right_widget')
-        self.right_layout = QtWidgets.QGridLayout()
-        self.right_widget.setLayout(self.right_layout)  
+        self.home_widget = QtWidgets.QWidget()  
+        self.home_widget.setObjectName('home_widget')
+        self.home_layout = QtWidgets.QGridLayout()
+        self.home_widget.setLayout(self.home_layout)  
 
-        self.Layout.addWidget(self.right_widget, 0, 2, 12, 10)  
+        self.Layout.addWidget(self.home_widget, 0, 2, 12, 10)  
 
-        self.right_recommend_label1 = QtWidgets.QLabel("")
-        self.right_recommend_label1.setObjectName('right_lable')
+        self.home_recommend_label1 = QtWidgets.QLabel("")
+        self.home_recommend_label1.setObjectName('home_lable')
 
-        self.right_recommend_widget = QtWidgets.QWidget()  
-        self.right_recommend_layout = QtWidgets.QGridLayout()  
-        self.right_recommend_widget.setLayout(self.right_recommend_layout)
+        self.home_recommend_widget = QtWidgets.QWidget()  
+        self.home_recommend_layout = QtWidgets.QGridLayout()  
+        self.home_recommend_widget.setLayout(self.home_recommend_layout)
 
         self.recommend_button_51 = QtWidgets.QToolButton()  
         self.recommend_button_51.clicked.connect(self.do_btn51)
@@ -1056,7 +1037,7 @@ class CNNRFWindow(QWidget):
         self.recommend_button_51.setIconSize(QtCore.QSize(100, 80))  
         self.recommend_button_51.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)  
 
-        self.right_recommend_layout.addWidget(self.recommend_button_51, 0, 0)
+        self.home_recommend_layout.addWidget(self.recommend_button_51, 0, 0)
 
         self.recommend_button_52 = QtWidgets.QToolButton()
         self.recommend_button_52.setText("Process")  
@@ -1065,14 +1046,14 @@ class CNNRFWindow(QWidget):
         self.recommend_button_52.setIconSize(QtCore.QSize(100, 80))  
         self.recommend_button_52.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)  
 
-        self.right_recommend_layout.addWidget(self.recommend_button_52, 0, 1)
+        self.home_recommend_layout.addWidget(self.recommend_button_52, 0, 1)
 
-        self.right_layout.addWidget(self.right_recommend_label1, 2, 0, 1, 8, Qt.AlignTop)
+        self.home_layout.addWidget(self.home_recommend_label1, 2, 0, 1, 8, Qt.AlignTop)
 
-        self.right_layout.addWidget(self.right_recommend_widget, 7, 0, 2, 9, Qt.AlignTop)
+        self.home_layout.addWidget(self.home_recommend_widget, 7, 0, 2, 9, Qt.AlignTop)
 
-        self.right_widget.setStyleSheet('''
-            QWidget#right_widget{
+        self.home_widget.setStyleSheet('''
+            QWidget#home_widget{
                 color:#232C51;
                 border-image:url(./images/BGCNNRF.png);
                 background:white;
@@ -1082,7 +1063,7 @@ class CNNRFWindow(QWidget):
                 border-top-right-radius:20px;
                 border-bottom-right-radius:20px;
             }
-            QLabel#right_lable{
+            QLabel#home_lable{
                 border:none;
                 font-size:40px;
                 font-weight:700;
@@ -1090,7 +1071,7 @@ class CNNRFWindow(QWidget):
             }
         ''')
 
-        self.right_recommend_widget.setStyleSheet(
+        self.home_recommend_widget.setStyleSheet(
             '''
             QToolButton{
                 border:none;
@@ -1128,17 +1109,15 @@ class MainUi(QtWidgets.QMainWindow):
         self.left_layout = QtWidgets.QGridLayout()  
         self.left_widget.setLayout(self.left_layout)  
 
-        self.right_widget = right_widget()
+        self.home_widget = HomePageWidget()
 
         self.main_layout.addWidget(self.left_widget, 0, 0, 12, 2)  
-        self.main_layout.addWidget(self.right_widget.right_widget, 0, 2, 12, 10)  
+        self.main_layout.addWidget(self.home_widget.home_widget, 0, 2, 12, 10)  
         self.setCentralWidget(self.main_widget)  
-        self.left_close = QtWidgets.QPushButton("")  # Button for closing the program
-        self.left_fix = QtWidgets.QPushButton("")  # button for fix the window
-        self.left_mini = QtWidgets.QPushButton("")  # button for minimization
 
-#Buttons for functions
-#Main function classification
+
+#Buttons
+#Buttons on the left menu
         self.left_label_4 = QtWidgets.QPushButton("Home Page")
         self.left_label_4.setObjectName('left_label')
         self.left_label_1 = QtWidgets.QPushButton("Choose model")
@@ -1147,11 +1126,11 @@ class MainUi(QtWidgets.QMainWindow):
         self.left_label_2.setObjectName('left_label')
         self.left_label_3 = QtWidgets.QPushButton("Instruction")
         self.left_label_3.setObjectName('left_label')
-#button for each function
-        self.left_label_4.clicked.connect(self.Main)
 
+#buttons for each window
+        self.left_label_4.clicked.connect(self.Main)
         self.left_button_4 = QtWidgets.QPushButton(qtawesome.icon('fa.star', color='lightSteelBlue'), "Default Prediction")
-        self.left_button_4.clicked.connect(self.MaskShow)
+        self.left_button_4.clicked.connect(self.DefaultResult)
         self.left_button_4.setObjectName('left_button')
 
         self.left_button_6 = QtWidgets.QPushButton(qtawesome.icon('fa.star', color='lightSteelBlue'), "Random Forest")
@@ -1160,11 +1139,11 @@ class MainUi(QtWidgets.QMainWindow):
 
         self.left_button_9 = QtWidgets.QPushButton(qtawesome.icon('fa.question', color='lightSteelBlue'), "read   me")
         self.left_button_9.setObjectName('left_button')
-        self.left_button_9.clicked.connect(self.Help)
+        self.left_button_9.clicked.connect(self.Instruction)
 
         self.left_button_8 = QtWidgets.QPushButton(qtawesome.icon('fa.star', color='lightSteelBlue'), "SVM")
         self.left_button_8.setObjectName('left_button')
-        self.left_button_8.clicked.connect(self.Filterwind)
+        self.left_button_8.clicked.connect(self.SVMwind)
 
         self.left_button_11 = QtWidgets.QPushButton(qtawesome.icon('fa.star', color='lightSteelBlue'), "SVM+CNN")
         self.left_button_11.setObjectName('left_button')
@@ -1178,35 +1157,17 @@ class MainUi(QtWidgets.QMainWindow):
         self.left_button_7.setObjectName('left_button')
         self.left_button_7.clicked.connect(self.CNN)
 
-        self.left_layout.addWidget(self.left_mini, 0, 0, 1, 1)
-        self.left_layout.addWidget(self.left_close, 0, 2, 1, 1)
-        self.left_layout.addWidget(self.left_fix, 0, 1, 1, 1)
+        self.left_layout.addWidget(self.left_label_4, 1, 0, 1, 3)
         self.left_layout.addWidget(self.left_label_1, 2, 0, 1, 3)
         self.left_layout.addWidget(self.left_button_8, 3, 0, 1, 3)
-        self.left_layout.addWidget(self.left_label_2, 8, 0, 1, 3)
-        self.left_layout.addWidget(self.left_button_4, 10, 0, 1, 3)
-        self.left_layout.addWidget(self.left_label_4, 1, 0, 1, 3)
-        self.left_layout.addWidget(self.left_button_6, 5, 0, 1, 3)
-        self.left_layout.addWidget(self.left_label_3, 11, 0, 1, 3)
         self.left_layout.addWidget(self.left_button_7, 4, 0, 1, 3)
-        self.left_layout.addWidget(self.left_button_9, 12, 0, 1, 3)
+        self.left_layout.addWidget(self.left_button_6, 5, 0, 1, 3)
         self.left_layout.addWidget(self.left_button_11, 6, 0, 1, 3)
         self.left_layout.addWidget(self.left_button_12, 7, 0, 1, 3)
-
-        self.left_close.setFixedSize(15, 15)  
-        self.left_fix.setFixedSize(15, 15)  
-        self.left_mini.setFixedSize(15, 15) 
-
-        self.left_close.setStyleSheet(
-            '''QPushButton{background:#F76677;border-radius:5px;}QPushButton:hover{background:red;}''')
-        self.left_fix.setStyleSheet(
-            '''QPushButton{background:#F7D674;border-radius:5px;}QPushButton:hover{background:yellow;}''')
-        self.left_mini.setStyleSheet(
-            '''QPushButton{background:#6DDF6D;border-radius:5px;}QPushButton:hover{background:green;}''')
-        self.left_close.clicked.connect(QCoreApplication.instance().quit)
-        self.left_close.clicked.connect(self.close)
-        self.left_mini.clicked.connect(self.showMinimized)
-        self.left_fix.clicked.connect(self.showMaximized)
+        self.left_layout.addWidget(self.left_label_2, 8, 0, 1, 3)
+        self.left_layout.addWidget(self.left_button_4, 10, 0, 1, 3)
+        self.left_layout.addWidget(self.left_label_3, 11, 0, 1, 3)
+        self.left_layout.addWidget(self.left_button_9, 12, 0, 1, 3)
 
         self.left_widget.setStyleSheet("\
             QPushButton{border:none;color:white;}\
@@ -1228,73 +1189,61 @@ class MainUi(QtWidgets.QMainWindow):
             }"
                                        )
 
-        #self.setWindowOpacity(0.9)  # Opacity
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground) 
-
-        #self.setWindowFlags(QtCore.Qt.FramelessWindowHint) # hide the flages
-
         self.main_layout.setSpacing(0)
 
         
-#Set connector for mask picture show
-    def MaskShow(self):        
-        self.box = Maskshow.MainDemo()
+#Set each window
+    def DefaultResult(self):        
+        self.box = DefaultResult.MainDemo()
         self.box.show()
 
-    def Filterwind(self, img_path):
-        Filter_window = FilterWindow("Filter", self.main_layout)
-        self.windowList.append(Filter_window)
+    def SVMwind(self, img_path):
+        SVM_window = SVMWindow("SVM", self.main_layout)
+        self.windowList.append(SVM_window)
         
-        self.right_widget.right_widget.close()
+        self.home_widget.home_widget.close()
 
     def CNN(self, img_path):
         CNN_window = CNNWindow("CNN", self.main_layout)
         self.windowList.append(CNN_window)
         
-        self.right_widget.right_widget.close()
+        self.home_widget.home_widget.close()
 
     def RF(self, img_path):
         RF_window = RFWindow("RF", self.main_layout)
         self.windowList.append(RF_window)
         
-        self.right_widget.right_widget.close()
+        self.home_widget.home_widget.close()
 
     def SVMCNN(self, img_path):
         SVMCNN_window = SVMCNNWindow("SVMCNN", self.main_layout)
         self.windowList.append(SVMCNN_window)
         
-        self.right_widget.right_widget.close()
+        self.home_widget.home_widget.close()
 
     def CNNRF(self, img_path):
         CNNRF_window = CNNRFWindow("CNNRF", self.main_layout)
         self.windowList.append(CNNRF_window)
         
-        self.right_widget.right_widget.close()
-
-
+        self.home_widget.home_widget.close()
 
     def Main(self):
         Main_window = MainWindow("Main", self.main_layout)
-        self.right_widget.right_widget.close()
+        self.home_widget.home_widget.close()
         self.windowList.append(Main_window)
        
 
-    def Help(self):
-        Help_window = HelpWindow("Main2", self.main_layout)
-        self.right_widget.right_widget.close()
-        self.windowList.append(Help_window)
+    def Instruction(self):
+        Instruction_window = InstructionWindow("Main2", self.main_layout)
+        self.home_widget.home_widget.close()
+        self.windowList.append(Instruction_window)
         
-
-
-# run the GUI
-
-
 def main():
     app = QtWidgets.QApplication(sys.argv)
     gui = MainUi()
     gui.show()
     sys.exit(app.exec_())
-
 
 if __name__ == '__main__':
     main()
