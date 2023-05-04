@@ -16,7 +16,7 @@ import dataFunctions as dF
 import featureFunctions as fF
 import phylopFunctions as pF
 import cnnFunctions
-import tkinter as tk
+
 
 
 class PromFinder():
@@ -49,13 +49,13 @@ class PromFinder():
         """
 		  
         kmer_folder = os.path.join(folder_path, 'kmer_data')
-        kmer_folder = kmer_folder.replace('\\', '/')
+        #kmer_folder = kmer_folder.replace('\\', '/')
         cage_path = os.path.join(folder_path, 'cage_data')
-        cage_path = cage_path.replace('\\', '/')
+        #cage_path = cage_path.replace('\\', '/')
         genome_path = os.path.join(folder_path, 'genome_data')	
-        genome_path = genome_path.replace('\\', '/')
+        #genome_path = genome_path.replace('\\', '/')
         phylop_path = os.path.join(folder_path, 'phyloP_data')
-        phylop_path = phylop_path.replace('\\', '/')
+        #phylop_path = phylop_path.replace('\\', '/')
 		
         chromosome_list = dF.get_chrom_list(genome_path)
 		
@@ -108,7 +108,7 @@ class PromFinder():
         self.use_existing = use_existing
 		
         model_path = os.path.join(os.path.dirname(train_folder), 'models', f'{classifier}')
-        model_path = model_path.replace('\\', '/')
+        #model_path = model_path.replace('\\', '/')
         if not os.path.exists(model_path):
             os.mkdir(model_path)
 			
@@ -126,11 +126,11 @@ class PromFinder():
 
         elif classifier == 'svm':
 			
-            train_data = np.max(feature_arr, axis=1)
+            train_data = np.sum(feature_arr, axis=1)
 # 	            phylo_arr = train_phylo.reshape(-1,1)
             # train_data = np.concatenate((train_data, phylo_arr.reshape(-1,1)), axis=1)
             save_model_path = os.path.join(model_path, 'svm_model.sav')
-            save_model_path = save_model_path.replace('\\', '/')
+            #save_model_path = save_model_path.replace('\\', '/')
             cF.create_svm(train_data, label_arr.reshape(-1,), save_model_path)			
 		
         elif classifier == 'dl_svm': 
@@ -148,16 +148,16 @@ class PromFinder():
            # pred_label = np.concatenate((pred_label.reshape(-1,1), sum_data), axis=1)
 
            save_model_path = os.path.join(model_path, 'svm_model.sav')
-           save_model_path = save_model_path.replace('\\', '/')
+           #save_model_path = save_model_path.replace('\\', '/')
            cF.create_svm(x_out, train_label.reshape(-1,), save_model_path)		
 
 			
         elif classifier == 'rf':
 
-             train_data = np.max(feature_arr, axis=1)			
+             train_data = np.sum(feature_arr, axis=1)			
              # train_data = np.concatenate((train_data, phylo_arr.reshape(-1,1)), axis=1)
              save_model_path = os.path.join(model_path, 'rf_model.sav')	
-             save_model_path = save_model_path.replace('\\', '/')			
+             #save_model_path = save_model_path.replace('\\', '/')			
              cF.create_rf(train_data, label_arr.reshape(-1,), save_model_path)
 
         elif classifier == 'dl_rf': 
@@ -174,7 +174,7 @@ class PromFinder():
            # sum_data = np.max(train_data, axis=1)           			
            # pred_label = np.concatenate((pred_label.reshape(-1,1), sum_data), axis=1)
            save_model_path = os.path.join(model_path, 'rf_model.sav')
-           save_model_path = save_model_path.replace('\\', '/')
+           #save_model_path = save_model_path.replace('\\', '/')
            cF.create_rf(x_out, train_label.reshape(-1,), save_model_path)		
 		   
     def predict(self, 
@@ -211,7 +211,7 @@ class PromFinder():
 		
         self.use_existing = use_existing
         output_path = os.path.join(test_folder, 'output')	
-        output_path = output_path.replace('\\', '/')
+        #output_path = output_path.replace('\\', '/')
         test_data, test_phylo, test_label = self.create_kmer_data(test_folder, cage_file_name, train=False)	
 		
         print(f'Testing {classifier}...')	
@@ -220,13 +220,13 @@ class PromFinder():
             test_data = np.max(test_data, axis=1)		
             # test_data = np.concatenate((test_data, test_phylo.reshape(-1,1)), axis=1)		
             pred_label = cF.predict(test_data, os.path.join(model_path, 'svm_model.sav'))
-            pred_label = pred_label.replace('\\', '/')
+            #pred_label = pred_label.replace('\\', '/')
 	
         elif classifier == 'rf':
             test_data = np.max(test_data, axis=1)			
             # test_data = np.concatenate((test_data, test_phylo.reshape(-1,1)), axis=1)	
             pred_label = cF.predict(test_data, os.path.join(model_path, 'rf_model.sav'))
-            pred_label = pred_label.replace('\\', '/')		
+            #pred_label = pred_label.replace('\\', '/')		
 	
         elif classifier == 'dl':
 		
@@ -241,7 +241,7 @@ class PromFinder():
             # sum_data = np.max(test_data, axis=1)			
             # pred_label = np.concatenate((prob.reshape(-1,1), sum_data), axis=1)
             save_model_path = os.path.join(model_path, 'svm_model.sav')
-            save_model_path = save_model_path.replace('\\', '/')
+            #save_model_path = save_model_path.replace('\\', '/')
             pred_label = cF.predict(x_out, save_model_path)
 
 
@@ -253,7 +253,7 @@ class PromFinder():
             # sum_data = np.max(test_data, axis=1)			
             # pred_label = np.concatenate((prob.reshape(-1,1), sum_data), axis=1)
             save_model_path = os.path.join(model_path, 'rf_model.sav')
-            save_model_path = save_model_path.replace('\\', '/')
+            #save_model_path = save_model_path.replace('\\', '/')
             pred_label = cF.predict(x_out, save_model_path)
 			
         metrics_list = cF.metrics(test_label, pred_label)
@@ -264,7 +264,7 @@ class PromFinder():
         df = pd.DataFrame({'label': list(pred_label)})
 		
         out_path = os.path.join(output_path, 'final_pred.csv')
-        out_path = out_path.replace('\\', '/')
+        #out_path = out_path.replace('\\', '/')
         df.to_csv(out_path)
         # df.to_csv(os.path.join(output_path, 'final_pred.csv'))
 

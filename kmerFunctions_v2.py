@@ -43,7 +43,7 @@ def get_kmer_windows(genome_path,
 		
     else:
         cage_df = pd.read_csv(os.path.join(cage_path, cage_file), delimiter=',',
-					  )
+					  index_col=0)
         chr_col = 'chr'	
 
 		
@@ -89,7 +89,7 @@ def get_kmer_windows(genome_path,
             line = f.readlines()[1:]
             item_length = len(line[0])
             for k in range(len(chr_cage_df)):
-				
+								
 				#get sequence of kmer
                 kmer = get_kmer(chr_cage_df.iloc[k, 1], item_length, line, half_window=window//2)
                 if kmer.lower().count('n') > 0:
@@ -97,37 +97,54 @@ def get_kmer_windows(genome_path,
                 kmer_list.append(kmer)
                 positions_arr.append(chr_cage_df.iloc[k, 1])
 				
+                label_arr.append(1)
+				
                 if k % 1000==0:
                     print(f'Processed {k} oligos...')
+								
 		
         positions_arr = np.array(positions_arr)
         #get labels
-        label_arr = np.ones((len(positions_arr),))
+        label_arr = np.array(label_arr)
+
 				
 		#get background samples
         if train:
             print('Getting background samples')
-            drawn_positions = get_background.get_background(genome_file, os.path.join(cage_path, cage_file), ch, 1, window, len(chr_cage_df), chr_cage_df.iloc[:, 1].to_list())
+            # drawn_positions = get_background.get_background(genome_file, os.path.join(cage_path, cage_file), ch, 1, window, len(positions_arr), list(positions_arr))						
 		
-            neg_positions_arr = []
-            for k in range(len(drawn_positions)):
-				#get sequence of negative kmer and add to previous list
-                kmer = get_kmer(drawn_positions[k], item_length, line, half_window=window//2)
-                if kmer.lower().count('n') > 0:
-                    continue
-                kmer_list.append(kmer)	
-                neg_positions_arr.append(drawn_positions[k])
+#             neg_positions_arr = []
+#             for k in range(len(drawn_positions)):
+
+# 				#get sequence of negative kmer and add to previous list
+#                 kmer = get_kmer(drawn_positions[k], item_length, line, half_window=window//2)
+#                 if kmer.lower().count('n') > 0:
+#                     continue
+#                 kmer_list.append(kmer)	
+#                 neg_positions_arr.append(drawn_positions[k])
+
+
+        neg_positions_arr = []
+        for k in range(len(label_arr)):
+            kmer = ''.join(list(np.random.choice(['A', 'T', 'C', 'G'], size=(window))))
+            kmer_list.append(kmer)
+            neg_positions_arr.append(-1)
+
 				
-            neg_positions_arr = np.array(neg_positions_arr)
+        neg_positions_arr = np.array(neg_positions_arr)
 			
-            negative_labels = np.zeros_like(neg_positions_arr)
+        negative_labels = np.zeros_like(neg_positions_arr)
 			
-			#concatenate to positive samples
-            label_arr = np.concatenate((label_arr, negative_labels))
-            positions_arr = np.concatenate((positions_arr, neg_positions_arr))
+        #concatenate to positive samples
+        label_arr = np.concatenate((label_arr, negative_labels))
+        positions_arr = np.concatenate((positions_arr, neg_positions_arr))
+			
 
 		#save kmers
-        kmer_df = pd.DataFrame({'sequence': kmer_list})             
+        print(f'Total number of oligos: {len(kmer_list)}')
+        kmer_df = pd.DataFrame({'sequence': ['']*len(kmer_list)})
+        for i, k in enumerate(kmer_list):
+            kmer_df.iloc[i, 0] = k             
         kmer_df.to_csv(os.path.join(kmer_path, kmer_file), header=None, index=None)
 				
 		#save labels
