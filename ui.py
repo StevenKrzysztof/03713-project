@@ -4,17 +4,12 @@ import qtawesome
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from PyQt5.QtWidgets import QAction, QMenu, QMenuBar
 import os
-import time
 import tkinter as tk
-from PyQt5.QtCore import QCoreApplication, Qt, pyqtSignal, QTimer
+from PyQt5.QtCore import QCoreApplication, Qt
 from PyQt5.QtMultimedia import *
 from io import StringIO
 
-
-from PyQt5.QtWidgets import QSlider
-from PyQt5.QtWidgets import QMenu
 import Maskshow
 import JenMain2
 
@@ -335,8 +330,7 @@ class FilterWindow(QWidget):
         self.right_recommend_layout = QtWidgets.QGridLayout()  
         self.right_recommend_widget.setLayout(self.right_recommend_layout)
 
-        self.recommend_button_32 = QtWidgets.QToolButton()
-        #self.recommend_button_11.setText("Process")  
+        self.recommend_button_32 = QtWidgets.QToolButton() 
         self.recommend_button_32.clicked.connect(self.do_btn32)
         self.recommend_button_32.setIcon(QtGui.QIcon('./images/chrom.png'))  
         self.recommend_button_32.setIconSize(QtCore.QSize(100, 80))  
@@ -360,7 +354,7 @@ class FilterWindow(QWidget):
         self.right_widget.setStyleSheet('''
             QWidget#right_widget{
                 color:#232C51;
-                border-image:url(./images/bgCH.png);
+                border-image:url(./images/BGSVM.png);
                 background:white;
                 border-top:10px solid darkGray;
                 border-bottom:1px solid darkGray;
@@ -540,7 +534,7 @@ class CNNWindow(QWidget):
         self.right_widget.setStyleSheet('''
             QWidget#right_widget{
                 color:#232C51;
-                border-image:url(./images/bgCH.png);
+                border-image:url(./images/BGCNN.png);
                 background:white;
                 border-top:10px solid darkGray;
                 border-bottom:1px solid darkGray;
@@ -720,7 +714,7 @@ class RFWindow(QWidget):
         self.right_widget.setStyleSheet('''
             QWidget#right_widget{
                 color:#232C51;
-                border-image:url(./images/bgCH.png);
+                border-image:url(./images/BGRF.png);
                 background:white;
                 border-top:10px solid darkGray;
                 border-bottom:1px solid darkGray;
@@ -901,7 +895,7 @@ class SVMCNNWindow(QWidget):
         self.right_widget.setStyleSheet('''
             QWidget#right_widget{
                 color:#232C51;
-                border-image:url(./images/bgCH.png);
+                border-image:url(./images/BGCNNSVM.png);
                 background:white;
                 border-top:10px solid darkGray;
                 border-bottom:1px solid darkGray;
@@ -1080,7 +1074,7 @@ class CNNRFWindow(QWidget):
         self.right_widget.setStyleSheet('''
             QWidget#right_widget{
                 color:#232C51;
-                border-image:url(./images/bgCH.png);
+                border-image:url(./images/BGCNNRF.png);
                 background:white;
                 border-top:10px solid darkGray;
                 border-bottom:1px solid darkGray;
